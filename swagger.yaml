@@ -1,0 +1,104 @@
+swagger: "2.0"
+info:
+  version: "2.0.0"
+  title: "Webservice api"
+  description: |
+    ## Authentication
+    `/private` path uses `JWT` security token, meant to access api for logged in
+    users
+
+    `/internal` path uses API key authentication, meant for admin related API, not open to public facing users
+
+    `/public` path requires no authentication, accessible to anyone
+
+    ## Limits
+    Limited to `xxx` requests per hour per `access_token` or `account_id`
+    overall.
+
+    ## Structure
+
+    ### Request
+    Every response and request uses standard json encoding
+    ```json
+    {
+
+    }
+    ```
+
+
+    ### PAGINATION
+    Is done via get header by passing `page` query parameter
+# basePath prefixes all resource paths
+basePath: /api/v1
+#
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+
+################################################################################
+#                                  Security                                    #
+################################################################################
+securityDefinitions:
+  JWT:
+    type: apiKey
+    in: header
+    description: Format `Bearer <access-token>`
+    name: Authorization
+
+
+################################################################################
+#                                  Paths                                       #
+################################################################################
+
+paths:
+  /public/tzc/convert_current_time/{timezone}:
+    get:
+      summary: Get user ads
+      tags: ["public"]
+
+      parameters:
+        - $ref: '#/parameters/timezone'
+
+      responses:
+        200:
+          description: Success.
+
+        400:
+          description: Parameter validation errors
+          schema:
+            $ref: "#/definitions/MessageError400Response"
+
+
+definitions:
+  MessageError400Response:
+    required:
+      - status
+      - error
+    properties:
+      status:
+        type: string
+        default: error
+      error:
+        type: string
+        description: Error message
+
+################################################################################
+#                                   Parameters                                 #
+################################################################################
+parameters:
+  timezone:
+    name: timezone
+    in: path
+    description: timzone number
+    type: integer
+    minimum: -12
+    maximum: 12
+    required: true
+
