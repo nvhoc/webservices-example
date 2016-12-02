@@ -44,8 +44,13 @@ describe('Public API test', function () {
     })
     describe('Get current time zone', function () {
       it("timezone in 1", function (done) {
+        const startTime = new Date();
         server.get('/api/v1/public/tzc/convert_current_time/1').expect("Content-type", /json/).end(function (err, res) {
-          res.status.should.equal(200);
+          const endTime = new Date();
+          if (endTime - startTime > config.timeout)
+            res.status.should.equal(500);
+          else
+            res.status.should.equal(200);
           done();
         });
       });

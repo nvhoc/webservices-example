@@ -2,6 +2,9 @@
 
 global.logger = require('log4js').getLogger();
 global._ = require('lodash');
+global.config = {
+  timeout: process.env.TIMEOUT || 10000
+};
 
 const app = require('./application');
 const http = require('http');

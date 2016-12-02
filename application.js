@@ -1,5 +1,6 @@
 "use strict";
 
+
 const express = require('express');
 const async = require('async');
 const app = express();
@@ -35,7 +36,7 @@ middleware('swagger.yaml', app, function (err, middleware) {
     res.status(err.status).json(
       {
         error_code: 'validator',
-        message: 'Thông tin không hợp lệ',
+        message: 'not match schema',
         stack_trace: err.message
       }
     );

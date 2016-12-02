@@ -2,11 +2,12 @@
   "name": "webservices_example",
   "version": "0.0.1",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --timeout 30000",
     "start": "node server.js"
   },
   "dependencies": {
     "assert": "^1.4.1",
+    "async-run": "^1.0.2",
     "body-parser": "^1.15.2",
     "compression": "^1.6.2",
     "debug": "~2.2.0",
@@ -16,6 +17,7 @@
     "lodash": "^4.17.2",
     "log4js": "^0.6.38",
     "node-statsd": "^0.1.1",
+    "request": "^2.79.0",
     "swagger-express-middleware": "^1.0.0-alpha.12"
   },
   "devDependencies": {
